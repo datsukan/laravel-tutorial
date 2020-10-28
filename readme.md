@@ -61,7 +61,7 @@ docker exec -it tutorial-php bash
 ### ブラウザテスト
 
 ```bash
-php artisan dusk
+php artisan dusk --env=testing
 ```
 
 # Note \ 注意事項
