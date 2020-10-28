@@ -24,10 +24,6 @@ services:
       - '9000:9000'
     environment:
       APP_ENV: local
-      DB_HOST: tutorial-mysql
-      DB_NAME: tutorial
-      DB_USER: root
-      DB_PASS: password
     volumes:
       - ./src/:/usr/share/nginx/html
       - ./docker-local/php/config/php.ini:/etc/php.ini
@@ -57,6 +53,14 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: tutorial
     hostname: localhost
+    networks:
+      - common
+
+  selenium:
+    container_name: tutorial-selenium
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
     networks:
       - common
 

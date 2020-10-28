@@ -22,8 +22,9 @@ composer install
 
 # Usage \ 使用方法
 
-導入手順の実施後は Docker コンテナを起動すれば使える状態になります。
-使い終わったら Docker コンテナを停止してください。
+導入手順の実施後は Docker コンテナを起動すれば使える状態になります。  
+使い終わったら Docker コンテナを停止してください。  
+composer や artisan のコマンドを使用する場合はアプリケーションのコンテナに接続して実行してください。
 
 ## 起動
 
@@ -41,6 +42,26 @@ docker-compose stop
 
 ```bash
 docker-compose down
+```
+
+## アプリケーションコンテナに接続
+
+```bash
+docker exec -it tutorial-php bash
+```
+
+## テスト実行
+
+### 統合テスト・ユニットテスト
+
+```bash
+./vendor/bin/phpunit
+```
+
+### ブラウザテスト
+
+```bash
+php artisan dusk
 ```
 
 # Note \ 注意事項

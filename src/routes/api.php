@@ -13,4 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::apiResource('tasks', 'TaskApiController');
+Route::group([ 'as' => 'api.' ], function(){
+    Route::apiResource('tasks', 'TaskApiController');
+});
