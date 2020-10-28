@@ -1,0 +1,70 @@
+### ToDo 登録
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": "部屋の換気"
+}
+
+### バリデーションチェック - 必須1
+POST http://localhost/api/tasks
+content-type: application/json
+
+{}
+
+### バリデーションチェック - 必須2
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": ""
+}
+
+### バリデーションチェック - 必須3
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": null
+}
+
+### バリデーションチェック - 型1
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": true
+}
+
+### バリデーションチェック - 型2
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": ["aaa"]
+}
+
+### バリデーションチェック - 型3
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": 123
+}
+
+### バリデーションチェック - 桁
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"
+}
+
+### バリデーションチェック - ユニーク
+POST http://localhost/api/tasks
+content-type: application/json
+
+{
+    "task": "買い出し"
+}
+

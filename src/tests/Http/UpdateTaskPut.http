@@ -1,0 +1,70 @@
+### Todo 更新
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": "部屋の換気!?"
+}
+
+### バリデーションチェック - 必須1
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{}
+
+### バリデーションチェック - 必須2
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": ""
+}
+
+### バリデーションチェック - 必須3
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": null
+}
+
+### バリデーションチェック - 型1
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": true
+}
+
+### バリデーションチェック - 型2
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": ["aaa"]
+}
+
+### バリデーションチェック - 型3
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": 123
+}
+
+### バリデーションチェック - 桁
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"
+}
+
+### バリデーションチェック - ユニーク
+PUT http://localhost/api/tasks/18
+content-type: application/json
+
+{
+    "task": "買い出し"
+}
+

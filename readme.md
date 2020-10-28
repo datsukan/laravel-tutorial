@@ -4,9 +4,9 @@ Laravel の学習をするための開発環境・ソースコードのセット
 
 # Requirement \ 前提要件
 
-- Docker
-- Visual Studio Code （任意）
-- Prettier Formatter for Visual Studio Code （任意）
+- [Docker](https://www.docker.com/get-started)
+- [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) （任意）
+- [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) （任意）
 
 # Installation \ 導入
 
