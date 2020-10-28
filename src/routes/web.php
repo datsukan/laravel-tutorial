@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ルートへのアクセスをリダイレクト
+Route::redirect('/', '/tasks', 301);
+
+// Todo リソースルーティング
+Route::resource('tasks', 'TaskController');
