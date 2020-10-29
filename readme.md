@@ -17,8 +17,14 @@ master ブランチがサンプル実装済み、defalut ブランチが未実�
 docker-compose up -d
 docker exec -it tutorial-php bash
 cp .env.example .env
-php artisan key:generate
 composer install
+php artisan key:generate
+```
+
+master ブランチの場合は追加でマイグレーションも実行してください。
+
+```bash
+php artisan migrate
 ```
 
 # Usage \ 使用方法
