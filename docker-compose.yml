@@ -60,6 +60,14 @@ services:
     networks:
       - common
 
+  selenium:
+    container_name: tutorial-selenium
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
+    networks:
+      - common
+
 volumes:
   tutorial-dbdata:
     driver: local
