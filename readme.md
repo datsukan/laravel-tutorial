@@ -16,8 +16,8 @@ Laravel の学習をするための開発環境・ソースコードのセット
 docker-compose up -d
 docker exec -it tutorial-php bash
 cp .env.example .env
-php artisan key:generate
 composer install
+php artisan key:generate
 ```
 
 # Usage \ 使用方法
