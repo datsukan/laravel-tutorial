@@ -114,6 +114,9 @@ $ php artisan make:migration create_tasks_table --create=tasks
 
 ### マイグレーションの定義作成
 
+作成コマンドで`database/migrations`配下に`YYYY_MM_DD_hhmmss_create_tasks_table.php`でマイグレーションファイルが生成されている。  
+下記の内容で定義を作成する。
+
 ```php
     public function up()
     {
@@ -328,7 +331,7 @@ DB の値を取得して返すように`app\Http\Controllers\TaskController.php`
 
 ### 登録処理を作成
 
-Todo 登録ページから入力された内容で登録を行って、再度 Todo 登録ページを返却する。
+Todo 登録ページから入力された内容で登録を行って、再度 Todo 登録ページを返却する。  
 ※`app\Http\Controllers\TaskController.php`の`store`メソッド
 
 ```php
