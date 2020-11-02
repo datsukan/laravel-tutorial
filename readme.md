@@ -3,6 +3,8 @@
 Laravel の学習をするための開発環境・ソースコードのセットです。  
 master ブランチがサンプル実装済み、defalut ブランチが未実装・実装前準備済みになっています。
 
+[チュートリアル手順はこちら](tutorial.md)
+
 # Requirement \ 前提要件
 
 - [Docker](https://www.docker.com/get-started)
