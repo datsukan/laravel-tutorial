@@ -8,6 +8,7 @@ master ブランチがサンプル実装済み、defalut ブランチが未実�
 - [Docker](https://www.docker.com/get-started)
 - [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) （任意）
 - [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) （任意）
+- [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) （任意）
 
 # Installation \ 導入
 
@@ -70,6 +71,12 @@ docker exec -it tutorial-php bash
 ```bash
 php artisan dusk --env=testing
 ```
+
+## デバッグ
+
+VSCode（拡張機能：PHP Debug 導入済み）のデバッグの実行（F5）でデバッグを開始します。  
+任意の箇所にブレークポイントを設定してステップ実行してください。  
+処理分岐の確認・特定時点での変数値の参照・Exception のキャッチなどを行えます。
 
 # Note \ 注意事項
 
