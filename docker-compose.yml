@@ -41,6 +41,8 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: tutorial
     hostname: localhost
+    volumes:
+      - tutorial-dbdata:/var/lib/mysql
     networks:
       - common
 
@@ -53,6 +55,8 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: tutorial
     hostname: localhost
+    volumes:
+      - tutorial-test-dbdata:/var/lib/mysql
     networks:
       - common
 
@@ -66,6 +70,8 @@ services:
 
 volumes:
   tutorial-dbdata:
+    driver: local
+  tutorial-test-dbdata:
     driver: local
 
 networks:
