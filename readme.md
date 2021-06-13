@@ -17,6 +17,8 @@ master ブランチがサンプル実装済み、defalut ブランチが未実�
 
 # Installation \ 導入
 
+## Windows（WSL以外） または Mac
+
 下記のコマンドを順番に実行してください。
 
 ```bash
@@ -28,9 +30,24 @@ php artisan key:generate
 php artisan dusk:install
 ```
 
-WSLまたはLinuxの場合はパーミッションの変更も実行してください。
+master ブランチの場合は追加でマイグレーションも実行してください。
 
 ```bash
+php artisan migrate
+```
+
+## WSL または Linux
+
+```bash
+cp .env.example .env
+bash set_docker_host_ip.sh
+cp docker-compose.override.yaml.example docker-compose.override.yaml
+docker-compose up -d
+docker exec -it tutorial-php bash
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan dusk:install
 chown nginx storage/ -R
 ```
 
@@ -89,6 +106,18 @@ php artisan dusk --env=testing
 VSCode（拡張機能：PHP Debug 導入済み）のデバッグの実行（F5）でデバッグを開始します。  
 任意の箇所にブレークポイントを設定してステップ実行してください。  
 処理分岐の確認・特定時点での変数値の参照・Exception のキャッチなどを行えます。
+
+### WSL または Linux の場合
+
+使い方は同じですが、ブレークポイントで処理が停止しない場合は下記の操作を行ってください。
+
+```bash
+docker-compose down
+bash set_docker_host_ip.sh
+docker-compose up -d
+```
+
+コンテナが起動してから再度デバッグを実施してみてください。
 
 # Note \ 注意事項
 
