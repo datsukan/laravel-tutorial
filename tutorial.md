@@ -68,15 +68,32 @@ Laravel の使い方は基本的に[公式ドキュメント](https://readouble.
 
 ### コントローラーとモデルの作成
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 `src`配下でリソースコントローラー・ルーティング・モデルの作成コマンドを実行する。
 
 ```bash
-$ php artisan make:controller TaskController --resource --model=Task
+php artisan make:controller TaskController --resource --model=Task
 ```
 
 ### ルーティングの追加
 
-`routes/web.php`に追記する。
+1. `routes/web.php`を開く。
+
+2. 下記を削除する。
+
+```php
+Route::get('/', function () {
+    return view('welcome');
+});
+```
+
+3. 下記を追記する。
 
 ```php
 // ルートへのアクセスをリダイレクト
@@ -106,6 +123,13 @@ Route::resource('tasks', 'TaskController');
 
 ### マイグレーションの作成
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 マイグレーションファイルの作成コマンドを実行する。
 
 ```bash
@@ -115,7 +139,7 @@ $ php artisan make:migration create_tasks_table --create=tasks
 ### マイグレーションの定義作成
 
 作成コマンドで`database/migrations`配下に`YYYY_MM_DD_hhmmss_create_tasks_table.php`でマイグレーションファイルが生成されている。  
-下記の内容で定義を作成する。
+下記の内容に編集して定義を作成する。
 
 ```php
     public function up()
@@ -130,6 +154,13 @@ $ php artisan make:migration create_tasks_table --create=tasks
 
 ### マイグレーションの実行
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 マイグレーションコマンドを実行して DB にテーブルを生成する。
 
 ```bash
@@ -138,7 +169,8 @@ $ php artisan migrate
 
 ### DB の確認
 
-SQL（DB）クライアントソフトでデータベースに接続してテーブルが生成されていることを確認する。
+SQL（DB）クライアントソフトでデータベースに接続してテーブルが生成されていることを確認する。  
+詳細は[SQLクライアントソフトの接続手順](sqlclient.md)を参照してください。
 
 | 設定項目 | 値        |
 | -------- | --------- |
@@ -151,13 +183,20 @@ SQL（DB）クライアントソフトでデータベースに接続してテー
 
 ### シーダーを作成する
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 動作確認用に DB にデータを登録するためのシーダーを作成する。
 
 ```bash
 $ php artisan make:seeder TasksTableSeeder
 ```
 
-DatabaseSeeder へ呼び出しを追記する。
+`database/seeds/TasksTableSeeder.php`を開いて下記の通り編集する。
 
 ```php
 <?php
@@ -188,6 +227,20 @@ class TasksTableSeeder extends Seeder
 
         DB::table('tasks')->insert($insertArr);
     }
+}
+```
+
+`database/seeds/DatabaseSeeder.php`を開いて下記の通り編集する。
+
+```php
+/**
+ * Seed the application's database.
+ *
+ * @return void
+ */
+public function run()
+{
+    $this->call(TasksTableSeeder::class);
 }
 ```
 
@@ -351,15 +404,25 @@ Todo 登録ページから入力された内容で登録を行って、再度 To
 
 ### モデルに複数代入可能にする設定を追加
 
-Laravel の ORM である Eloquent の create メソッドが使用できるように、モデルに複数代入が可能な設定を追加する。
+Laravel の ORM である Eloquent の create メソッドが使用できるように、モデルに複数代入が可能な設定を追加する。  
+`app/Task.php`を開いて下記の通り編集する。
 
 ```php
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Task extends Model
+{
     /**
      * 複数代入する属性
      *
      * @var array
      */
     protected $fillable = ['task'];
+}
 ```
 
 ### 更新のビューを作成
@@ -412,7 +475,8 @@ Laravel の ORM である Eloquent の create メソッドが使用できるよ�
 
 ### 更新処理を作成
 
-Todo 更新ページから入力された内容で更新を行って、再度 Todo 更新ページを返却する。
+Todo 更新ページから入力された内容で更新を行って、再度 Todo 更新ページを返却する。  
+`app\Http\Controllers\TaskController.php`の`update`メソッドを下記の通り編集する。
 
 ```php
     /**
@@ -433,7 +497,8 @@ Todo 更新ページから入力された内容で更新を行って、再度 To
 
 ### 削除処理を作成
 
-Todo 一覧ページから入力された内容で削除を行って、再度 Todo 一覧ページを返却する。
+Todo 一覧ページから入力された内容で削除を行って、再度 Todo 一覧ページを返却する。  
+`app\Http\Controllers\TaskController.php`の`destroy`メソッドを下記の通り編集する。
 
 ```php
     /**
@@ -454,6 +519,13 @@ Todo 一覧ページから入力された内容で削除を行って、再度 To
 
 ### バリデーションを作成
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 入力内容の検証を行うため、FormRequest クラスを作成する。
 
 ```bash
@@ -463,7 +535,7 @@ $ php artisan make:request UpdateTaskPut
 
 ### バリデーション処理を作成
 
-`app\Http\Requests\StoreTaskPost.php`に処理を作成する。
+`app\Http\Requests\StoreTaskPost.php`を開いて下記の通り編集する。
 
 ```php
 <?php
@@ -524,7 +596,7 @@ class StoreTaskPost extends FormRequest
 }
 ```
 
-`app\Http\Requests\UpdateTaskPut.php`に処理を作成する。
+`app\Http\Requests\UpdateTaskPut.php`を開いて下記の通り編集する。
 
 ```php
 <?php
@@ -585,20 +657,69 @@ class UpdateTaskPut extends FormRequest
 }
 ```
 
+### 動作確認
+
+ここまでの手順で一通りの画面実装が完成しました！  
+ブラウザから`http://localhost/task`を開いて下記の操作を試してみましょう。  
+すべて正しく実装されていれば正常に動作します。
+
+#### タスク一覧の表示
+
+1. ブラウザから`http://localhost/task`を開く
+2. `再読み込み`リンクをクリックする
+3. タスクの一覧が表示されることを確認する
+
+#### タスクの削除
+
+1. ブラウザから`http://localhost/task`を開く
+2. 表示されているタスクの`削除`ボタンをクリックする
+3. 削除した内容が一覧に表示されなくなっていることを確認する
+
+#### タスクの登録
+
+1. ブラウザから`http://localhost/task`を開く
+2. `登録`リンクをクリックする
+3. タスク内容を入力して`登録`ボタンをクリックする
+4. `一覧に戻る`リンクをクリックする
+5. 登録した内容が一覧に追加されていることを確認する
+
+#### タスクの更新
+
+1. ブラウザから`http://localhost/task`を開く
+2. 各タスクの`更新`リンクをクリックする
+3. 入力欄のタスクを書き換えて`更新`ボタンをクリックする
+4. `一覧へ戻る`リンクをクリックする
+5. 更新した内容が一覧の表示へ反映されていることを確認する
+
 ## API の実装
 
 ### API のルーティング
 
+下記の処理を削除する。
+
+```php
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+```
+
 API でタスクリソースを操作できるように`routes/api.php`にルーティングを追加する。  
 ※Web のルーティングと name が重複しないようにエイリアス（api.）を付与する。
 
-```bash
+```php
 Route::group([ 'as' => 'api.' ], function(){
     Route::apiResource('tasks', 'TaskApiController');
 });
 ```
 
 ### API のコントローラーの作成
+
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
 
 API のコントローラーを生成するコマンドを実行する。
 
@@ -608,7 +729,8 @@ $ php artisan make:controller TaskApiController --resource --model=Task --api
 
 ### REST Client の確認用ファイルの作成
 
-API をコールするために`tests\Http`配下に REST Client（VSCode 拡張）の定義ファイルを作成する。
+API をコールするために`tests\Http`配下に REST Client（VSCode 拡張）の定義ファイルとして`Todo.php`を作成する。  
+DBのデータ状態は操作した状況によって変わっているはずなので、「Todo 更新」「Todo 削除」のURL末尾で指定しているIDは、「ToDo 登録」のレスポンス内容に合わせて変えてください。
 
 ```
 ### ToDo 一覧取得
@@ -623,7 +745,7 @@ content-type: application/json
 }
 
 ### Todo 更新
-PUT http://localhost/api/tasks/18
+PUT http://localhost/api/tasks/7
 content-type: application/json
 
 {
@@ -631,7 +753,7 @@ content-type: application/json
 }
 
 ### ToDo 削除
-DELETE http://localhost/api/tasks/21
+DELETE http://localhost/api/tasks/7
 ```
 
 ### コントローラーの実装
@@ -714,6 +836,13 @@ class TaskApiController extends Controller
 
 ### バリデーションの実装
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 入力内容の検証を行うため、FormRequest クラスを作成する。
 
 ```bash
@@ -723,7 +852,7 @@ $ php artisan make:request UpdateTaskApiPut
 
 ## バリデーション処理を作成
 
-`app\Http\Requests\StoreTaskApiPost.php`に処理を作成する。
+`app\Http\Requests\StoreTaskApiPost.php`を下記の通り編集する。
 
 ```php
 <?php
@@ -794,7 +923,7 @@ class StoreTaskApiPost extends FormRequest
 }
 ```
 
-`app\Http\Requests\UpdateTaskApiPut.php`に処理を作成する。
+`app\Http\Requests\UpdateTaskApiPut.php`を下記の通り編集する。
 
 ```php
 <?php
@@ -873,13 +1002,20 @@ class UpdateTaskApiPut extends FormRequest
 
 ### ファクトリの生成
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 テストデータを生成するためのファクトリを作成する。
 
 ```bash
 $ php artisan make:factory TaskFactory --model=Task
 ```
 
-`database\factories\`配下に`TaskFactory.php`を作成する。
+`database\factories\`配下の`TaskFactory.php`を下記の通り編集する。
 
 ```php
 <?php
@@ -897,6 +1033,13 @@ $factory->define(App\Task::class, function (Faker $faker) {
 
 ### 統合テストの作成
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 コマンドを実行して統合テストを作成する。
 
 ```bash
@@ -905,7 +1048,11 @@ $ php artisan make:test IndexTaskTest
 
 ### 統合テストを記述
 
-コマンドで作成したファイルに疎通、HTTP ステータス、バリデーションなどのテストを記述する。
+1. `tests/Feature/ExampleTest.php`を削除する。
+2. `tests/Feature/IndexTaskTest.php`を開く。
+3. `testExample`メソッドを削除する。
+4. コマンドで作成したファイルに疎通、HTTP ステータス、バリデーションなどのテストを記述する。  
+下記はあくまで一例なので、masterブランチの`tests/Feature/IndexTaskTest.php`を参照して他のテストケースも作成する。
 
 ```php
 
@@ -920,9 +1067,14 @@ $ php artisan make:test IndexTaskTest
     }
 ```
 
-その他パターン割愛。
-
 ### 統合テストを実行
+
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
 
 作成した統合テストを実施するためのコマンドを実行する。
 
@@ -932,6 +1084,13 @@ $ php artisan make:test IndexTaskTest
 
 ### ブラウザテストを作成
 
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
+
 コマンドを実行してブラウザテストを作成する。
 
 ```bash
@@ -940,7 +1099,11 @@ $ php artisan dusk:make IndexTaskTest
 
 ### ブラウザテストを記述
 
-コマンドで作成したファイルに画面表示、画面遷移、フォームの制御などのテストを記述する。
+1. `tests/Browser/ExampleTest.php`を削除する。
+2. `tests/Browser/IndexTaskTest.php`を開く。
+3. `testExample`メソッドを削除する。
+4. コマンドで作成したファイルに画面表示、画面遷移、フォームの制御などのテストを記述する。
+下記はあくまで一例なので、masterブランチの`tests/Browser/IndexTaskTest.php`を参照して他のテストケースも作成する。
 
 ```php
     /**
@@ -960,9 +1123,64 @@ $ php artisan dusk:make IndexTaskTest
     }
 ```
 
-その他パターン割愛。
+### ブラウザテスト設定を修正する
+
+1. `tests/DuskTestCase.php`を開く。
+2. 下記の通り編集する。
+
+```php
+<?php
+
+namespace Tests;
+
+use Laravel\Dusk\TestCase as BaseTestCase;
+use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+
+abstract class DuskTestCase extends BaseTestCase
+{
+    use CreatesApplication;
+
+    protected function baseUrl()
+    {
+         return 'http://tutorial-nginx';
+    }
+
+    /**
+     * Prepare for Dusk test execution.
+     *
+     * @beforeClass
+     * @return void
+     */
+    public static function prepare()
+    {
+        //
+    }
+
+    /**
+     * Create the RemoteWebDriver instance.
+     *
+     * @return \Facebook\WebDriver\Remote\RemoteWebDriver
+     */
+    protected function driver()
+    {
+
+        return RemoteWebDriver::create(
+            'http://tutorial-selenium:4444/wd/hub', DesiredCapabilities::chrome()
+        );
+    }
+}
+```
 
 ### ブラウザテストを実行
+
+アプリケーションコンテナに接続していない場合は接続する。  
+※コマンドラインが`bash-4.2#`から始まってる場合は接続しています
+
+```bash
+docker exec -it tutorial-php bash
+```
 
 作成したブラウザテストを実施するためのコマンドを実行する。
 
@@ -972,4 +1190,5 @@ $ php artisan dusk --env=testing
 
 # おわり
 
+これでチュートリアルはすべて完了です！  
 master ブランチのソースと見比べて更にブラッシュアップしてみてください。
