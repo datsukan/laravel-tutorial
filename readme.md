@@ -25,6 +25,13 @@ docker exec -it tutorial-php bash
 cp .env.example .env
 composer install
 php artisan key:generate
+php artisan dusk:install
+```
+
+WSLまたはLinuxの場合はパーミッションの変更も実行してください。
+
+```bash
+chown nginx storage/ -R
 ```
 
 master ブランチの場合は追加でマイグレーションも実行してください。
