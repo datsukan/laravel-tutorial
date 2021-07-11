@@ -8,6 +8,7 @@
       "name": "PHP Docker for XDebug",
       "type": "php",
       "request": "launch",
+      "hostname": "0.0.0.0",
       "port": 9001,
       "pathMappings": {
         "/usr/share/nginx/html": "${workspaceRoot}/src"
