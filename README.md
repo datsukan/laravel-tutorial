@@ -17,7 +17,7 @@ master ブランチがサンプル実装済み、defalut ブランチが未実�
 
 # Installation \ 導入
 
-## Windows（WSL以外） または Mac
+## Windows（WSL 以外） または Mac
 
 下記のコマンドを順番に実行してください。
 
@@ -125,8 +125,8 @@ docker-compose up -d
 
 # Author \ 著者
 
-- 神達小楠
+datsukan
 
 # License \ ライセンス
 
-「Laravel Tutorial」は[MIT license](https://en.wikipedia.org/wiki/MIT_License)です。
+[MIT license](https://en.wikipedia.org/wiki/MIT_License)
